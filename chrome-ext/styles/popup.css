@@ -1,0 +1,40 @@
+.header-logo {
+    max-height: 100px;
+}
+
+.content {
+    position: relative;
+}
+
+.loading-splash {
+    background: #fff;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.loading-splash.-hidden {
+    display: none;
+}
+
+.loading-splash-warning {
+    text-align: center;
+    font-weight: bold;
+}
+
+.loading-splash-logo-container {
+    display: flex;
+    justify-content: center;
+    animation: loading-splash-animation 2s infinite;
+}
+
+@keyframes loading-splash-animation {
+    0%    { opacity: 1; }
+    50%   { opacity: 0; }
+    100%  { opacity: 1; }
+}

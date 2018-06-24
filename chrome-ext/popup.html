@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="styles/popup.css" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <img class="header-logo" src="images/logo_wide-500.png" />
+        </header>
+        <section class="content">
+            <p data-localize="chooseWeekdays"></p>
+            <div class="weekdays-container">
+                <div>
+                    <input type="checkbox" id="wd-monday" checked />
+                    <label for="wd-monday" data-localize="wdMonday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-tuesday" checked />
+                    <label for="wd-tuesday" data-localize="wdTuesday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-wednesday" checked />
+                    <label for="wd-wednesday" data-localize="wdWednesday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-thursday" checked />
+                    <label for="wd-thursday" data-localize="wdThursday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-friday" checked />
+                    <label for="wd-friday" data-localize="wdFriday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-saturday" />
+                    <label for="wd-saturday" data-localize="wdSaturday"></label>
+                </div>
+                <div>
+                    <input type="checkbox" id="wd-sunday" />
+                    <label for="wd-sunday" data-localize="wdSunday"></label>
+                </div>
+            </div>
+            <div>
+                <button data-localize="makeReport" id="makeReportBtn"></button>
+                <input type="checkbox" id="make-report-im-export" value="make-report-im-export" checked />
+                <label for="make-report-im-export" data-localize="imExportHint"></label>
+            </div>
+            <div class="loading-splash -hidden" id="loading-splash">
+                <p data-localize="loadingSplashWarning" class="loading-splash-warning"></p>
+                <div class="loading-splash-logo-container">
+                    <img src="images/ov-chipkaart-logo.png" />
+                </div>
+            </div>
+        </section>
+
+        <script src="javascript/localize.js"></script>
+        <script src="javascript/popup.js"></script>
+    </body>
+</html>

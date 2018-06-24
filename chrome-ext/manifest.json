@@ -1,0 +1,32 @@
+{
+    "name": "__MSG_extensionName__",
+    "version": "1.0",
+    "description": "Create your monthly OV-chipkaart report",
+    "default_locale": "en",
+    "permissions": [
+        "declarativeContent",
+        "activeTab",
+        "https://www.ov-chipkaart.nl/"
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "page_action": {
+        "default_title": "__MSG_extensionName__",
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/logo-16.png",
+            "32": "images/logo-32.png",
+            "48": "images/logo-48.png",
+            "128": "images/logo-128.png"
+        }
+    },
+    "icons" : {
+        "16": "images/logo-16.png",
+        "32": "images/logo-32.png",
+        "48": "images/logo-48.png",
+        "128": "images/logo-128.png"
+    },
+    "manifest_version": 2
+}

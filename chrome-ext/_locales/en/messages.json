@@ -1,0 +1,54 @@
+{
+    "extensionName": {
+        "message": "OV-chipcard reporter",
+        "description": "Extension name"
+    },
+    "extensionDescription": {
+        "message": "Create your monthly OV-chipcard report",
+        "description": "Extension description"
+    },
+    "chooseWeekdays": {
+        "message": "Choose weekdays to be included into report",
+        "description": "A hint to guide user to select desired weekdays"
+    },
+    "makeReport": {
+        "message": "Make report",
+        "description": "A button text to make a report"
+    },
+    "wdMonday": {
+        "message": "Monday",
+        "description": "Weekday: Monday"
+    },
+    "wdTuesday": {
+        "message": "Tuesday",
+        "description": "Weekday: Tuesday"
+    },
+    "wdWednesday": {
+        "message": "Wednesday",
+        "description": "Weekday: Wednesday"
+    },
+    "wdThursday": {
+        "message": "Thursday",
+        "description": "Weekday: Thursday"
+    },
+    "wdFriday": {
+        "message": "Friday",
+        "description": "Weekday: Friday"
+    },
+    "wdSaturday": {
+        "message": "Saturday",
+        "description": "Weekday: Saturday"
+    },
+    "wdSunday": {
+        "message": "Sunday",
+        "description": "Weekday: Sunday"
+    },
+    "imExportHint": {
+        "message": "PDF export once done",
+        "description": "Checkbox hint to export report immediately"
+    },
+    "loadingSplashWarning": {
+        "message": "DO NOT CLOSE OR SWITCH TAB",
+        "description": "A warning message shown on the loading splash"
+    }
+}

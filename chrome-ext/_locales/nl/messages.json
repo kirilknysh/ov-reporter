@@ -1,0 +1,54 @@
+{
+    "extensionName": {
+        "message": "OV-chipkaart verslaggever",
+        "description": "Extension name"
+    },
+    "extensionDescription": {
+        "message": "Maak uw maandelijkse OV-chipkaartrapport",
+        "description": "Extension description"
+    },
+    "chooseWeekdays": {
+        "message": "Kies weekdagen",
+        "description": "A hint to guide user to select desired weekdays"
+    },
+    "makeReport": {
+        "message": "Maak rapport",
+        "description": "A button text to make a report"
+    },
+    "wdMonday": {
+        "message": "Maandag",
+        "description": "Weekday: Monday"
+    },
+    "wdTuesday": {
+        "message": "Dinsdag",
+        "description": "Weekday: Tuesday"
+    },
+    "wdWednesday": {
+        "message": "Woensdag",
+        "description": "Weekday: Wednesday"
+    },
+    "wdThursday": {
+        "message": "Thursday",
+        "description": "Weekday: Thursday"
+    },
+    "wdFriday": {
+        "message": "Donderdag",
+        "description": "Weekday: Friday"
+    },
+    "wdSaturday": {
+        "message": "Zaterdag",
+        "description": "Weekday: Saturday"
+    },
+    "wdSunday": {
+        "message": "Zondag",
+        "description": "Weekday: Sunday"
+    },
+    "imExportHint": {
+        "message": "PDF-export eenmaal gereed",
+        "description": "Checkbox hint to export report immediately"
+    },
+    "loadingSplashWarning": {
+        "message": "SLUIT OF SLUIT DE TABBLOK NIET",
+        "description": "A warning message shown on the loading splash"
+    }
+}
