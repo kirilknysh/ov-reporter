@@ -3,6 +3,10 @@
 
 1. Clone the repository or download the sources
 
+<p align="center">
+    <img src="https://raw.githubusercontent.com/kirilknysh/ov-reporter/master/chrome-ext/docs/download.gif" />
+</p>
+
 2. Enable "Developer mode":
 <p align="center">
     <img src="https://raw.githubusercontent.com/kirilknysh/ov-reporter/master/chrome-ext/docs/chrome-ext-enable.gif" />
