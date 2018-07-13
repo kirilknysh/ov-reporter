@@ -11,21 +11,27 @@ if (config.get('help')) {
 }
 
 async function main() {
+    let facade;
+
     try {
         validate.args();
 
-        const facade = await ovFacade();
+        facade = await ovFacade();
 
         await facade.openHistory();
         await facade.selectCard();
         await facade.selectMonth();
         await facade.markDays();
         await facade.saveReport();
+        await facade.close();
+        facade = null;
 
         logger.done();
     } catch (e) {
         logger.fatal(e.message);
         logger.verbose(e.stack);
+    } finally {
+        facade && facade.close();
     }
 }
 
