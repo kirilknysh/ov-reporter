@@ -4,5 +4,6 @@
     "output": "./report.pdf",
     "card": "3190730003212963",
     "days": [1, 1, 1, 1, 1, 0, 0],
-    "month": 7
+    "month": 7,
+    "historyUrl": "https://www.ov-chipkaart.nl/mijn-ov-chip/mijn-ov-reishistorie.htm"
 }

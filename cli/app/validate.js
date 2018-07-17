@@ -4,6 +4,8 @@ function checkType(value, type) {
     switch (type) {
         case 'string':
             return typeof value === 'string' && value;
+        case 'number':
+            return Number.isFinite(value);
         case 'array':
             return Array.isArray(value);
         default:
