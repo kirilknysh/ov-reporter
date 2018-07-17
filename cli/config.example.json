@@ -1,0 +1,8 @@
+{
+    "username": "username",
+    "password": "pwd",
+    "output": "./report.pdf",
+    "card": "3190730003212963",
+    "days": [1, 1, 1, 1, 1, 0, 0],
+    "month": 7
+}

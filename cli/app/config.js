@@ -53,8 +53,8 @@ const schema = {
     },
     'month': {
         alias: 'm',
-        describe: 'Reporting month',
-        type: 'string',
+        describe: 'Reporting month (1 - January, 2 - February, etc)',
+        type: 'number',
         appRequired: true,
     },
     'verbose': {

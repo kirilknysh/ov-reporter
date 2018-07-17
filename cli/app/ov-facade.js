@@ -36,7 +36,39 @@ async function openHistory(page) {
 }
 
 async function selectCard(page) {
+    const card = config.get('card');
+    const selector = await page.$$eval('.cs-card-number', (cardNumberNodes, card) => {
+        const node = cardNumberNodes.find(cardNumberNode => cardNumberNode.textContent === card);
 
+        if (!node) {
+            return '';
+        }
+
+        const customClass = '--ov-reporter-cli-card';
+        node.classList.add(customClass);
+        return `.${customClass}`;
+    }, card);
+
+    logger.verbose('Card selector:', selector);
+    if (!selector) {
+        throw new Error(`Can't find the card "${card}"`);
+    }
+
+    logger.verbose('Click on selected card');
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.click(selector),
+    ]);
+}
+
+async function selectMonth(page) {
+    logger.verbose('Select date filter');
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.click('input#dateFilter'),
+    ]);
+
+    logger.verbose('Select month');
 }
 
 module.exports = async function() {
@@ -63,6 +95,10 @@ module.exports = async function() {
         },
         async selectMonth() {
             logger.selectMonth();
+
+            await selectMonth(page);
+
+            logger.verbose('Month selected');
         },
         async markDays() {
             logger.markDays();

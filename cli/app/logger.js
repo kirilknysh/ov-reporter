@@ -12,7 +12,7 @@ const logger = {
             return;
         }
 
-        console.log('[verbose]', ...args);
+        console.log('[verbose]', (new Date()).toISOString(), ...args);
     },
 
     fatal(...args) {
