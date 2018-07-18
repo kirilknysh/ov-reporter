@@ -36,7 +36,7 @@ const schema = {
     },
     'output': {
         alias: 'o',
-        describe: 'Path to output file',
+        describe: 'Directory the final report should be saved to',
         type: 'string',
         appRequired: true,
     },

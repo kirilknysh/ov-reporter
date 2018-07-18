@@ -1,4 +1,5 @@
 const url = require('url');
+const path = require('path');
 
 const puppeteer = require('puppeteer');
 
@@ -40,7 +41,7 @@ async function openHistory(page) {
 async function selectCard(page) {
     const card = config.get('card');
     const selector = await page.$$eval('.cs-card-number', (cardNumberNodes, card) => {
-        const node = cardNumberNodes.find(cardNumberNode => cardNumberNode.textContent === card);
+        const node = cardNumberNodes.find(cardNumberNode => cardNumberNode.innerText === card);
 
         if (!node) {
             return '';
@@ -97,9 +98,84 @@ async function selectMonth(page) {
     ]);
 }
 
+async function markDays(page) {
+    logger.verbose('Mark page');
+    const days = config.get('days');
+
+    const isLast = await page.$$eval('.known-transaction', (rows, days) => {
+        rows.forEach((row) => {
+            const price = row.children[2].textContent.trim();
+
+            if (!price) {
+                // skip incomes, auto-charge, etc
+                return;
+            }
+
+            const dateParts = row.children[0].childNodes[0].textContent.trim().split('-');
+            const checkbox = {
+                container: row.children[3],
+                node: row.children[3].children[0],
+            };
+            const date = new Date(+dateParts[2], +dateParts[1] - 1, +dateParts[0]);
+            const day = date.getDay() -1;
+
+            if (days[day]) {
+                checkbox.container.classList.add('checked');
+                checkbox.node.checked = true;
+            } else {
+                checkbox.container.classList.remove('checked');
+                checkbox.node.checked = false;
+            }
+        });
+
+        const buttons = document.querySelectorAll('.transaction-pagination button');
+        if (buttons.length < 1) {
+            return true;
+        }
+        const lastButton = buttons[buttons.length - 1];
+        if (lastButton.classList.contains('tlsBtn')) {
+            return true;
+        }
+        return false;
+    }, days);
+
+    if (isLast) {
+        return;
+    }
+
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.$$eval('.transaction-pagination button', (buttons) => {
+            const lastButton = buttons[buttons.length - 1];
+            lastButton.click();
+        }),
+    ]);
+
+    await markDays(page);
+}
+
+async function saveReport(page) {
+    logger.verbose('Click Create expenses overview');
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.click('input#selected-card'),
+    ]);
+
+    const output = config.get('output');
+    const downloadPath = path.resolve(process.cwd(), output);
+    logger.verbose('Download path:', downloadPath);
+
+    await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
+
+    await page.click('button[type=submit][value=PDF]');
+
+    // TODO: no way to detect download finish
+    await new Promise(resolve => setTimeout(resolve, 5000));
+}
+
 module.exports = async function() {
     logger.verbose('Create browser');
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     logger.verbose('Create page');
     const page = await browser.newPage();
 
@@ -128,9 +204,17 @@ module.exports = async function() {
         },
         async markDays() {
             logger.markDays();
+
+            await markDays(page);
+
+            logger.verbose('Days marked');
         },
         async saveReport() {
             logger.saveReport();
+
+            await saveReport(page);
+
+            logger.verbose('Report saved');
         },
         async close() {
             return browser.close();
