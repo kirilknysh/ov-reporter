@@ -1,3 +1,5 @@
+const url = require('url');
+
 const puppeteer = require('puppeteer');
 
 const config = require('./config');
@@ -62,18 +64,42 @@ async function selectCard(page) {
 }
 
 async function selectMonth(page) {
-    logger.verbose('Select date filter');
+    const pageUrl = page.url();
+    logger.verbose('Current page URL:', pageUrl);
+    const pageUrlObj = new url.URL(pageUrl);
+
+    const month = config.get('month');
+    const beginDate = new Date();
+    const endDate = new Date();
+
+    beginDate.setMonth(month - 1, 1);
+    endDate.setMonth(month, 0);
+    const beginDateParts = [
+        (beginDate.getDate() + '').padStart(2, '0'),
+        ((beginDate.getMonth() + 1) + '').padStart(2, '0'),
+        beginDate.getFullYear() + '',
+    ];
+    const endDateParts = [
+        (endDate.getDate() + '').padStart(2, '0'),
+        ((endDate.getMonth() + 1) + '').padStart(2, '0'),
+        endDate.getFullYear() + '',
+    ];
+
+    pageUrlObj.searchParams.set('begindate', beginDateParts.join('-'));
+    pageUrlObj.searchParams.set('enddate', endDateParts.join('-'));
+
+    const periodUrl = pageUrlObj.toString();
+    logger.verbose('Period page URL:', periodUrl);
+
     await Promise.all([
         page.waitForNavigation({ waitUntil: 'networkidle0' }),
-        page.click('input#dateFilter'),
+        page.goto(periodUrl),
     ]);
-
-    logger.verbose('Select month');
 }
 
 module.exports = async function() {
     logger.verbose('Create browser');
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     logger.verbose('Create page');
     const page = await browser.newPage();
 
