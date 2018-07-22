@@ -14,6 +14,7 @@ nconf.overrides({
         name: packageJson.name,
         version: packageJson.version,
         description: packageJson.description,
+        bin: Object.keys(packageJson.bin)[0],
     },
 });
 
@@ -131,7 +132,7 @@ function help() {
 
     //example
     let example = 'Usage example:\n  ';
-    example += `${config.get('app').name} `;
+    example += `${config.get('app').bin} `;
     example += keys
         .filter(key => schema[key].appRequired)
         .map((key) => {

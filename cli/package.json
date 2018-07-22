@@ -24,5 +24,8 @@
   },
   "devDependencies": {
     "eslint": "5.1.0"
+  },
+  "bin": {
+    "ovr" : "./app/ov-reporter-cli.js"
   }
 }
