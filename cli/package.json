@@ -2,18 +2,23 @@
   "name": "ov-reporter-cli",
   "version": "1.0.0",
   "description": "Command-line interface for ov-reporter",
+  "keywords": [
+      "cli",
+      "ov-chipkaart",
+      "report",
+      "public transport"
+  ],
   "main": "app/ov-reporter-cli.js",
   "scripts": {
     "start": "node app/ov-reporter-cli.js",
-    "debug": "node --inspect-brk app/ov-reporter-cli.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node --inspect-brk app/ov-reporter-cli.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kirilknysh/ov-reporter.git"
   },
-  "author": "Kiril Knysh",
-  "license": "ISC",
+  "author": "Kiril Knysh <k.knysh@gmail.com> (https://kirilknysh.github.io/)",
+  "license": "LGPL-3.0",
   "bugs": {
     "url": "https://github.com/kirilknysh/ov-reporter/issues"
   },
