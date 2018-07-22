@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const config = require('./config');
 const logger = require('./logger');
 const validate = require('./validate');
