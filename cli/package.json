@@ -1,6 +1,6 @@
 {
   "name": "ov-reporter-cli",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Command-line interface for ov-reporter",
   "main": "app/ov-reporter-cli.js",
   "scripts": {
@@ -14,7 +14,6 @@
   },
   "author": "Kiril Knysh",
   "license": "ISC",
-  "private": true,
   "bugs": {
     "url": "https://github.com/kirilknysh/ov-reporter/issues"
   },
