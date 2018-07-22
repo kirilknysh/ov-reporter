@@ -7,8 +7,9 @@ const config = require('./config');
 const logger = require('./logger');
 
 async function login(page) {
-    logger.verbose('Type username');
-    await page.type('input#username', config.get('username'));
+    const username = config.get('username');
+    logger.verbose('Type username:', username);
+    await page.type('input#username', username);
 
     logger.verbose('Type password');
     await page.type('input#password', config.get('password'));
@@ -27,10 +28,11 @@ async function login(page) {
 }
 
 async function openHistory(page) {
-    logger.verbose('Go to historyUrl');
+    const historyUrl = config.get('historyUrl');
+    logger.verbose('Go to historyUrl:', historyUrl);
     await Promise.all([
         page.waitForNavigation({ waitUntil: 'networkidle0' }),
-        page.goto(config.get('historyUrl')),
+        page.goto(historyUrl),
     ]);
 
     logger.verbose('Login');
@@ -40,6 +42,7 @@ async function openHistory(page) {
 
 async function selectCard(page) {
     const card = config.get('card');
+    logger.verbose('Card to select:', card);
     const selector = await page.$$eval('.cs-card-number', (cardNumberNodes, card) => {
         const node = cardNumberNodes.find(cardNumberNode => cardNumberNode.innerText === card);
 
@@ -72,6 +75,7 @@ async function selectMonth(page) {
     const month = config.get('month');
     const beginDate = new Date();
     const endDate = new Date();
+    logger.verbose('Month to select:', month);
 
     beginDate.setMonth(month - 1, 1);
     endDate.setMonth(month, 0);

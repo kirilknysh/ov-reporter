@@ -60,6 +60,10 @@ const schema = {
         appRequired: true,
         appValidate: value => value > 0 && value <= 12,
     },
+    'config': {
+        describe: 'Path to a config file',
+        type: 'string',
+    },
     'verbose': {
         alias: 'v',
         describe: 'Verbose logging',
@@ -70,11 +74,10 @@ const schema = {
     },
 };
 
-const config = nconf
-    .argv(schema)
-    .file({
-        file: 'config.json',
-    });
+const config = nconf.argv(schema);
+config.file({
+    file: config.get('config') || 'config.json',
+});
 
 config.defaults({
     historyUrl: 'https://www.ov-chipkaart.nl/mijn-ov-chip/mijn-ov-reishistorie.htm',
