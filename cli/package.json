@@ -11,7 +11,9 @@
   "main": "app/ov-reporter-cli.js",
   "scripts": {
     "start": "node app/ov-reporter-cli.js",
-    "debug": "node --inspect-brk app/ov-reporter-cli.js"
+    "debug": "node --inspect-brk app/ov-reporter-cli.js",
+    "test": "jest --notify",
+    "test-coverage": "jest --notify --coverage"
   },
   "repository": {
     "type": "git",
@@ -28,7 +30,8 @@
     "puppeteer": "1.6.0"
   },
   "devDependencies": {
-    "eslint": "5.1.0"
+    "eslint": "5.1.0",
+    "jest": "23.4.1"
   },
   "bin": {
     "ovr": "./app/ov-reporter-cli.js"

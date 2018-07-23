@@ -1,5 +1,4 @@
-exports.convertMonth = function (month) {
-    const now = new Date();
+exports.convertMonth = function (month, now = new Date()) {
     const nowMonth = now.getMonth();
     const beginDate = new Date();
     const endDate = new Date();
