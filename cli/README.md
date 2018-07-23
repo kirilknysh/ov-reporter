@@ -1,4 +1,9 @@
 # ov-reporter-cli
+
+[![Build Status](https://travis-ci.com/kirilknysh/ov-reporter.svg?branch=master)](https://travis-ci.com/kirilknysh/ov-reporter)
+
+---
+
 ## Command-line interface
 
 ### Install
