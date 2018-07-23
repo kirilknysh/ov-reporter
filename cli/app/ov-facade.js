@@ -6,6 +6,8 @@ const puppeteer = require('puppeteer');
 const config = require('./config');
 const logger = require('./logger');
 
+const { convertMonth, formatDateAsSearchParam } = require('./helpers');
+
 async function login(page) {
     const username = config.get('username');
     logger.verbose('Type username:', username);
@@ -73,25 +75,11 @@ async function selectMonth(page) {
     const pageUrlObj = new url.URL(pageUrl);
 
     const month = config.get('month');
-    const beginDate = new Date();
-    const endDate = new Date();
     logger.verbose('Month to select:', month);
+    const { beginDate, endDate } = convertMonth(month);
 
-    beginDate.setMonth(month - 1, 1);
-    endDate.setMonth(month, 0);
-    const beginDateParts = [
-        (beginDate.getDate() + '').padStart(2, '0'),
-        ((beginDate.getMonth() + 1) + '').padStart(2, '0'),
-        beginDate.getFullYear() + '',
-    ];
-    const endDateParts = [
-        (endDate.getDate() + '').padStart(2, '0'),
-        ((endDate.getMonth() + 1) + '').padStart(2, '0'),
-        endDate.getFullYear() + '',
-    ];
-
-    pageUrlObj.searchParams.set('begindate', beginDateParts.join('-'));
-    pageUrlObj.searchParams.set('enddate', endDateParts.join('-'));
+    pageUrlObj.searchParams.set('begindate', formatDateAsSearchParam(beginDate));
+    pageUrlObj.searchParams.set('enddate', formatDateAsSearchParam(endDate));
 
     const periodUrl = pageUrlObj.toString();
     logger.verbose('Period page URL:', periodUrl);
@@ -160,6 +148,13 @@ async function markDays(page) {
 
 async function saveReport(page) {
     logger.verbose('Click Create expenses overview');
+
+    const isDisabled = await page.$eval('input#selected-card', node => node.disabled);
+    logger.verbose('Click Create expenses is disabled:', isDisabled);
+    if (isDisabled) {
+        throw new Error('"Create expense overview" is disabled. Ensure the correct month is passed.');
+    }
+
     await Promise.all([
         page.waitForNavigation({ waitUntil: 'networkidle0' }),
         page.click('input#selected-card'),
