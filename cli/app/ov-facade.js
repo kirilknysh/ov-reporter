@@ -18,7 +18,7 @@ async function login(page) {
 
     logger.verbose('Click login');
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.click('input#btn-login'),
     ]);
 
@@ -33,7 +33,7 @@ async function openHistory(page) {
     const historyUrl = config.get('historyUrl');
     logger.verbose('Go to historyUrl:', historyUrl);
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.goto(historyUrl),
     ]);
 
@@ -64,7 +64,7 @@ async function selectCard(page) {
 
     logger.verbose('Click on selected card');
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.click(selector),
     ]);
 }
@@ -85,7 +85,7 @@ async function selectMonth(page) {
     logger.verbose('Period page URL:', periodUrl);
 
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.goto(periodUrl),
     ]);
 }
@@ -93,6 +93,7 @@ async function selectMonth(page) {
 async function markDays(page) {
     logger.verbose('Mark page');
     const days = config.get('days');
+    logger.verbose('Days to mark:', days);
 
     const isLast = await page.$$eval('.known-transaction', (rows, days) => {
         rows.forEach((row) => {
@@ -136,7 +137,7 @@ async function markDays(page) {
     }
 
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.$$eval('.transaction-pagination button', (buttons) => {
             const lastButton = buttons[buttons.length - 1];
             lastButton.click();
@@ -156,7 +157,7 @@ async function saveReport(page) {
     }
 
     await Promise.all([
-        page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
         page.click('input#selected-card'),
     ]);
 
@@ -174,7 +175,7 @@ async function saveReport(page) {
 
 module.exports = async function() {
     logger.verbose('Create browser');
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     logger.verbose('Create page');
     const page = await browser.newPage();
 
