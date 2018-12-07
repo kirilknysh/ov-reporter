@@ -175,7 +175,7 @@ async function saveReport(page) {
 
 module.exports = async function() {
     logger.verbose('Create browser');
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     logger.verbose('Create page');
     const page = await browser.newPage();
 
