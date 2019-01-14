@@ -1,14 +1,15 @@
 exports.convertMonth = function (month, now = new Date()) {
     const nowMonth = now.getMonth();
+    const nowYear = now.getFullYear();
     const beginDate = new Date();
     const endDate = new Date();
 
     if (month > nowMonth) {
-        beginDate.setMonth(nowMonth, 1);
-        endDate.setMonth(nowMonth, now.getDate());
+        beginDate.setFullYear(nowYear, nowMonth, 1);
+        endDate.setFullYear(nowYear, nowMonth, now.getDate());
     } else {
-        beginDate.setMonth(month - 1, 1);
-        endDate.setMonth(month, 0);
+        beginDate.setFullYear(nowYear, month - 1, 1);
+        endDate.setFullYear(nowYear, month, 0);
     }
 
     return { beginDate, endDate };
