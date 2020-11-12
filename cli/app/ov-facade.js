@@ -165,7 +165,11 @@ async function markDays(page) {
 async function saveReport(page) {
     logger.verbose('Click Create expenses overview');
 
-    const isDisabled = await page.$eval('input#selected-card', node => node.disabled);
+    const isDisabled = await page.$eval('input#selected-card', (node) => {
+        node.scrollIntoView(false);
+
+        return node.disabled
+    });
     logger.verbose('Click Create expenses is disabled:', isDisabled);
     if (isDisabled) {
         throw new Error('"Create expense overview" is disabled. Ensure the correct month is passed.');
@@ -190,7 +194,7 @@ async function saveReport(page) {
 
 module.exports = async function() {
     logger.verbose('Create browser');
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ devtools: false });
     logger.verbose('Create page');
     const page = await browser.newPage();
 
