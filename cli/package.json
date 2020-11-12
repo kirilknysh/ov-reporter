@@ -39,5 +39,8 @@
   },
   "bin": {
     "ovr": "./app/ov-reporter-cli.js"
+  },
+  "publishConfig": {
+      "registry": "https://registry.npmjs.org"
   }
 }
