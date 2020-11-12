@@ -27,7 +27,7 @@
   "homepage": "https://github.com/kirilknysh/ov-reporter/tree/master/cli",
   "dependencies": {
     "nconf": "0.10.0",
-    "puppeteer": "1.6.0"
+    "puppeteer": "1.13.0"
   },
   "devDependencies": {
     "eslint": "5.1.0",
