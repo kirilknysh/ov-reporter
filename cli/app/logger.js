@@ -34,6 +34,10 @@ const logger = {
         console.log('👤  ', 'Opening your history...');
     },
 
+    acceptCookies() {
+        console.log('🍪  ', 'Accepting cookies if needed');
+    },
+
     login() {
         console.log('🔓  ', 'Log in');
     },

@@ -21,6 +21,7 @@ async function main() {
         facade = await ovFacade();
 
         await facade.openHistory();
+        await facade.acceptCookies();
         await facade.selectCard();
         await facade.selectMonth();
         await facade.markDays();

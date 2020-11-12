@@ -42,6 +42,21 @@ async function openHistory(page) {
     logger.verbose('Login done');
 }
 
+async function acceptCookies(page) {
+    const acceptButton = await page.$('#cookieConsentOK');
+
+    if (!acceptButton) {
+        logger.verbose('No cookies accept button');
+        return;
+    }
+
+    logger.verbose('Click cookies accept');
+    await Promise.all([
+        page.waitForNavigation({ waitUntil: 'networkidle2' }),
+        page.click('#cookieConsentOK'),
+    ]);
+}
+
 async function selectCard(page) {
     const card = config.get('card');
     logger.verbose('Card to select:', card);
@@ -187,6 +202,13 @@ module.exports = async function() {
             await openHistory(page);
 
             logger.verbose('History open');
+        },
+        async acceptCookies() {
+            logger.acceptCookies();
+
+            await acceptCookies(page);
+
+            logger.verbose('Cookies accepted');
         },
         async selectCard() {
             logger.selectCard();
