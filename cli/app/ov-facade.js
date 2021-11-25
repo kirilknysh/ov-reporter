@@ -181,12 +181,15 @@ async function saveReport(page) {
     ]);
 
     const output = config.get('output');
+    const format = config.get('format');
     const downloadPath = path.resolve(process.cwd(), output);
     logger.verbose('Download path:', downloadPath);
 
     await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
 
-    await page.click('button[type=submit][value=PDF]');
+    for(const type of format) {
+        await page.click(`button[type=submit][value=${type.toUpperCase()}]`);
+    }
 
     // TODO: no way to detect download finish
     await new Promise(resolve => setTimeout(resolve, 5000));
