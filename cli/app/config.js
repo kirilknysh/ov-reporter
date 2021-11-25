@@ -41,6 +41,13 @@ const schema = {
         type: 'string',
         appRequired: true,
     },
+    'format': {
+        alias: 'f',
+        describe: 'Array of formats to download (pdf,csv)',
+        type: 'array',
+        choices: [ 'pdf', 'csv' ],
+        default: [ 'pdf' ]
+    },
     'card': {
         alias: 'c',
         describe: 'OV chipcard number',
