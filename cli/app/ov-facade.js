@@ -10,6 +10,25 @@ const logger = require('./logger');
 
 const { convertMonth, formatDateAsSearchParam } = require('./helpers');
 
+const defaultHeaders = {
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control": "max-age=0",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "Host": "www.ov-chipkaart.nl",
+    "Origin": "https://www.ov-chipkaart.nl",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36",
+    "sec-ch-ua": "\"Chromium\";v=\"103\", \".Not/A)Brand\";v=\"99\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Linux\""
+};
+
 async function login(page) {
     const username = config.get('username');
     logger.verbose('Type username:', username);
@@ -224,8 +243,7 @@ function performRequest({ fields, url, method, cookies }) {
     const data = new URLSearchParams(fields).toString();
     // TODO: figure out what more we need to do so ov-chipkaart won't block connections because of "unusual" traffic.
     const headers = {
-        "Accept": "*/*",
-        "Content-Type": "application/x-www-form-urlencoded",
+        ...defaultHeaders,
         "Cookie": cookieHeader,
     };
     return axios.request({ url, method, headers, data, responseType: 'arraybuffer' });
