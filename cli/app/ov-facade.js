@@ -1,5 +1,7 @@
 const url = require('url');
 const path = require('path');
+const fs = require('fs/promises');
+const axios = require('axios').default;
 
 const puppeteer = require('puppeteer');
 
@@ -185,14 +187,48 @@ async function saveReport(page) {
     const downloadPath = path.resolve(process.cwd(), output);
     logger.verbose('Download path:', downloadPath);
 
-    await page._client.send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath });
+    const requestParams = await page.$eval('#content form', formReplica);
+    const cookies = await page.cookies();
 
-    for(const type of format) {
-        await page.click(`button[type=submit][value=${type.toUpperCase()}]`);
+    await Promise.allSettled(format.map(async (type) => {
+        const fields = { ...requestParams.fields, documentFormat: type };
+        const response = await performRequest({ ...requestParams, fields, cookies });
+        const filename = extractFilename(response.headers)
+        if(!filename) console.warn(`Filename not found, using default.${type}`)
+        await fs.writeFile(path.join(downloadPath, filename || `default.${type}`), response.data)
+    }));
+}
+
+function formReplica(f) {
+    return {
+        fields: Object.fromEntries(new FormData(f)),
+        url: f.action,
+        method: f.method,
     }
+}
 
-    // TODO: no way to detect download finish
-    await new Promise(resolve => setTimeout(resolve, 5000));
+function makeCookieHeader(cookies) {
+    return cookies.map(
+        c => `${encodeURIComponent(c.name)}=${encodeURIComponent(c.value)}`,
+    ).join('; ');
+}
+
+function extractFilename(headers) {
+    const filenameRe = /(^|;) ?filename=(?<filename>.*)(;|$)/;
+    const { groups: { filename } = {}} = filenameRe.exec(headers['content-disposition']) || {};
+    return filename;
+}
+
+function performRequest({ fields, url, method, cookies }) {
+    const cookieHeader = makeCookieHeader(cookies);
+    const data = new URLSearchParams(fields).toString();
+    // TODO: figure out what more we need to do so ov-chipkaart won't block connections because of "unusual" traffic.
+    const headers = {
+        "Accept": "*/*",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": cookieHeader,
+    };
+    return axios.request({ url, method, headers, data, responseType: 'arraybuffer' });
 }
 
 module.exports = async function() {
